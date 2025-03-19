@@ -39,7 +39,6 @@ In terminal inside docker container, run:
 ```bash
 cd /home/developer/ros2_ws
 ./setup.sh
-sudo ./build_uXRCE.sh
 ./build.sh
 source install/setup.bash
 ```
@@ -112,6 +111,17 @@ Note that this is added to `~/.bashrc` so that it is automatically sourced when 
 
 For your convenience, the default ROS log path has been changed to `~/ros2_ws/src/logs`.
 This will allow you to access them from outside the container.
+
+### Data exchange between PX4 and ROS
+
+In order to communicate with PX4 from ROS, it is necessary to open the special bridge with [micro_ros_agent](https://github.com/micro-ROS/micro-ROS-Agent):
+
+```bash
+ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888
+```
+
+Internally, this package uses the Micro XRCE-DDS Agent.
+You can read more about topics' bridging in the [PX4 documentation](https://docs.px4.io/v1.15/en/ros2/user_guide.html#setup-micro-xrce-dds-agent-client).
 
 ## Additional features
 
