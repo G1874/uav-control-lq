@@ -4,8 +4,8 @@ using ControlSystems
 using ForwardDiff
 
 
-c_T = 0.5   # Thrust coefficient
-c_d = 0.5   # Drag coefficient
+c_T = 8.54858e-06  # Thrust coefficient
+c_d = 8.06428e-05  # Drag coefficient
 l = 0.25    # Distance to rotor
 m = 2.0     # Mass of the UAV
 g = 9.81    # Gravitational acceleration
@@ -60,7 +60,7 @@ function f(x, u)
     Θ_x, Θ_y, Θ_z = Θ
 
     "Rotation matrix local to global"
-    R = (Rx(Θ_x) * Ry(Θ_y) * Rz(Θ_z))'
+    R = (Rz(Θ_z)* Ry(Θ_y) * Rx(Θ_x))'
 
     ξ_dot = v
     v_dot = [0.0,0.0,-g] + 1/m * R*[0.0,0.0,T_Σ]
