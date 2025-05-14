@@ -60,7 +60,7 @@ function f(x, u)
     Θ_x, Θ_y, Θ_z = Θ
 
     "Rotation matrix local to global"
-    R = (Rz(Θ_z)* Ry(Θ_y) * Rx(Θ_x))'
+    R = (Rz(Θ_z) * Ry(Θ_y) * Rx(Θ_x))'
 
     ξ_dot = v
     v_dot = [0.0,0.0,-g] + 1/m * R*[0.0,0.0,T_Σ]
