@@ -26,11 +26,58 @@ B = ...
   -6.974721793287342e-5   6.974721793287342e-5  -6.974721793287342e-5   6.974721793287342e-5
   -0.00201607            -0.00201607             0.00201607             0.00201607];
 
+C = eye(12);
+D = 0;
+
 %%
 
-Q = eye(12);
-R = eye(4);
+Q = eye(12) .* [1e9,1e9,1e9,1e9,1e9,1e9,1e12,1e12,1e12,1e10,1e10,1e10];
+R = eye(4) * 0.01;
 
-[K,~,~] = lqr(A,B,Q,R);
+Tstep = 0.001;
+
+[K,~,~] = lqrd(A,B,Q,R,Tstep);
 
 writematrix(K,"K.txt")
+
+%%
+
+pos_ref = [10,10,10];
+yaw_ref = 0;
+
+r = [pos_ref,0,0,0,0,0,yaw_ref,0,0,0];
+x0 = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+A_hat = A - B*K;
+B_hat = B*K;
+
+uav_lin = ss(A_hat,B_hat,C,D);
+uav_lin = c2d(uav_lin,Tstep,'zoh');
+
+t = 0:Tstep:5;
+u = repmat(r,length(t),1);
+y = lsim(uav_lin,u,t,x0);
+
+pos = y(:,1:3);
+ang = y(:,7:9);
+
+subplot(3,2,[1,3,5])
+plot3(pos(:,1),pos(:,2),pos(:,3)); hold on
+xlabel("x [m]"); ylabel("y [m]"); zlabel("z [m]")
+grid on
+axis equal
+subplot(3,2,2)
+plot(t,rad2deg(ang(:,1)))
+title("\theta_x")
+xlabel("Time [s]"); ylabel("\theta_x [deg]")
+grid on
+subplot(3,2,4)
+plot(t,rad2deg(ang(:,2)))
+title("\theta_y")
+xlabel("Time [s]"); ylabel("\theta_y [deg]")
+grid on
+subplot(3,2,6)
+plot(t,rad2deg(ang(:,3)))
+title("\theta_z")
+xlabel("Time [s]"); ylabel("\theta_z [deg]")
+grid on
