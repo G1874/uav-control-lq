@@ -10,21 +10,20 @@ l = 0.25    # Distance to rotor
 m = 2.0     # Mass of the UAV
 g = 9.81    # Gravitational acceleration
 
-"Coefficient matrix: coordinate system aligned with actuators"
-# C_F = [
-#     c_T c_T c_T c_T;
-#     0 l*c_T 0 -l*c_T;
-#     -l*c_T 0 l*c_T 0;
-#     -c_d c_d -c_d c_d
-# ]
-
-"Coefficient matrix: coordinate system aligned drone body"
+"Coefficient matrix"
 C_F = [
     c_T c_T c_T c_T;
     -sqrt(2)/2*l*c_T sqrt(2)/2*l*c_T sqrt(2)/2*l*c_T -sqrt(2)/2*l*c_T;
     -sqrt(2)/2*l*c_T sqrt(2)/2*l*c_T -sqrt(2)/2*l*c_T sqrt(2)/2*l*c_T;
     -c_d -c_d c_d c_d
 ]
+
+# C_F = [
+#     -c_T -c_T -c_T -c_T;
+#     -sqrt(2)/2*l*c_T sqrt(2)/2*l*c_T sqrt(2)/2*l*c_T -sqrt(2)/2*l*c_T;
+#     sqrt(2)/2*l*c_T -sqrt(2)/2*l*c_T sqrt(2)/2*l*c_T -sqrt(2)/2*l*c_T;
+#     c_d c_d -c_d -c_d
+# ]
 
 "Rotation matrices"
 Rx(θ) = [

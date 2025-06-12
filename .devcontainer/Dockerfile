@@ -54,8 +54,8 @@ RUN apt-get install -y ros-humble-ros-gzharmonic
 RUN apt install -y \
     ros-humble-turtle-tf2-py \
     ros-humble-tf2-tools \
-    ros-dev-tools \
-    ros-humble-plotjuggler-ros
+    ros-dev-tools
+    # ros-humble-plotjuggler-ros
 
 RUN apt-get update
 RUN apt-get upgrade -y
